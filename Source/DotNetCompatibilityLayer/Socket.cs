@@ -644,12 +644,25 @@
 			#if cooper
 			if (fSocketOutput == null)
 				throw new Exception("Socket is not connected");
-			fSocketOutput.write(buf, offset, size);
+			try
+			{
+				fSocketOutput.write(buf, offset, size);
+			}
+			catch (java.io.IOException e)
+			{
+				throw new SocketException("Socket send failed.", e);
+			}
 			return size;
 			#else
 			void *lPointer;
 			lPointer = &buf[offset];
-			return rtl.send(fHandle, (AnsiChar *)lPointer, size, (int)flags);
+			var lResult = rtl.send(fHandle, (AnsiChar *)lPointer, size, (int)flags);
+			if (lResult < 0)
+			{
+				var lError = GetLastSocketError();
+				throw new SocketException(lError);
+			}
+			return lResult;
 			#endif
 		}
 
@@ -667,6 +680,17 @@
 		{
 			return Send(buf, 0, length(buf), SocketFlags.None);
 		}
+
+		#if !cooper
+		private static Int32 GetLastSocketError()
+		{
+			#if windows
+			return rtl.WSAGetLastError();
+			#else
+			return rtl.errno;
+			#endif
+		}
+		#endif
 
 		public IAsyncResult BeginSend(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback callback, Object state)
 		{
@@ -904,8 +928,23 @@
 	// Generated from /Users/mh/Xcode/DerivedData/Fire-beiaefoboptwvtbxtvecylpnprxy/Build/Products/Debug/Fire.app/Contents/Resources/Mono/lib/mono/2.0/System.dll
 	public class SocketException : Exception
 	{
-		//public SocketException(Int32 error);
-		//public SocketException();
+		public SocketException()
+		{
+		}
+
+		public SocketException(Int32 error)
+		{
+			this.ErrorCode = error;
+		}
+
+		public SocketException(String message) : base(message)
+		{
+		}
+
+		public SocketException(String message, Exception innerException) : base(message, innerException)
+		{
+		}
+
 		public Int32 ErrorCode { get; set; }
 		//public SocketError SocketErrorCode { get; set; }
 		//public override String Message { get; set; }
