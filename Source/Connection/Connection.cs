@@ -479,6 +479,8 @@ namespace RemObjects.InternetPack
 			while (size > 0)
 			{
 				Int32 lSentBytes = this.DataSocketSendAsMuchAsPossible(buffer, offset, size);
+				if (lSentBytes <= 0)
+					throw new SocketException("Socket send made no progress.");
 				size -= lSentBytes;
 				offset += lSentBytes;
 				lTotalSentBytes += lSentBytes;
