@@ -1134,15 +1134,20 @@ namespace RemObjects.InternetPack.Http
 				Int32 lEqual = lParam.IndexOf('=');
 				if (lEqual > -1)
 				{
-					String lName = lParam.Substring(0, lEqual).Trim();
-					String lValue = lParam.Substring(lEqual + 1).Trim();
+					String lName = DecodeQueryStringComponent(lParam.Substring(0, lEqual).Trim());
+					String lValue = DecodeQueryStringComponent(lParam.Substring(lEqual + 1).Trim());
 					fData[lName] = fData.ContainsKey(lName) ? fData[lName] + "," + lValue : lValue;
 				}
 				else
 				{
-					fData.Add(lParam, null);
+					fData.Add(DecodeQueryStringComponent(lParam.Trim()), null);
 				}
 			}
+		}
+
+		private static String DecodeQueryStringComponent(String value)
+		{
+			return Url.TryRemovePercentEncodingsFromPath(value, true) ?? value;
 		}
 
 		[ToString]
