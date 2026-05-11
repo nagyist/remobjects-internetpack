@@ -64,6 +64,8 @@ namespace RemObjects.InternetPack
 				this.fListeningSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 #endif
 			this.fListeningSocket.Bind(this.fEndPoint);
+			this.fEndPoint = (IPEndPoint)this.fListeningSocket.LocalEndPoint;
+			this.Port = this.fEndPoint.Port;
 			this.fListeningSocket.Listen(this.MaxWaitConnections);
 			this.fListenThreads = new Thread[ListenerThreadCount];
 
@@ -107,6 +109,8 @@ namespace RemObjects.InternetPack
 				this.fListeningSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 #endif
 			this.fListeningSocket.Bind(this.fEndPoint);
+			this.fEndPoint = (IPEndPoint)this.fListeningSocket.LocalEndPoint;
+			this.Port = this.fEndPoint.Port;
 		}
 
 		public virtual Connection Accept()
