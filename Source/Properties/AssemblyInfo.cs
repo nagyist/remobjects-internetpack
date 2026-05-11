@@ -1,8 +1,9 @@
-/*---------------------------------------------------------------------------
+﻿/*---------------------------------------------------------------------------
   RemObjects Internet Pack for .NET
   (c)opyright RemObjects Software, LLC. 2003-2016. All rights reserved.
 ---------------------------------------------------------------------------*/
 
+#if ECHOES
 using System;
 using System.Reflection;
 using System.Resources;
@@ -18,9 +19,10 @@ using System.Resources;
 [assembly: AssemblyVersion("1.0.0.1")]
 
 [assembly: NeutralResourcesLanguage("")]
-[assembly: CLSCompliant(true)]
+//[assembly: CLSCompliant(true)]
 
-#if REMOBJECTS_SIGN_ASSEMBLY && !COMPACTFRAMEWORK
+#if !COMPACTFRAMEWORK
 [assembly: AssemblyKeyName("RemObjectsSoftware")]
 [assembly: System.Security.AllowPartiallyTrustedCallers()]
+#endif
 #endif

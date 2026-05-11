@@ -11,16 +11,18 @@
     <OutputPathUsesModes>True</OutputPathUsesModes>
     <SuppressWarnings>CPW8</SuppressWarnings>
     <MangleTypeNames>True</MangleTypeNames>
+    <KnownConditionalDefines>DEBUG;DEBUG_LOG_MCP;REMOBJECTS_SIGN_ASSEMBLY;TRACE</KnownConditionalDefines>
+    <DeploymentTargetVersion>12.0</DeploymentTargetVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>.\Bin\Debug</OutputPath>
     <EnableAsserts>True</EnableAsserts>
     <Optimize>False</Optimize>
     <GenerateDebugInfo>True</GenerateDebugInfo>
-    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <ConditionalDefines>DEBUG;DEBUG_LOG_MCP;REMOBJECTS_SIGN_ASSEMBLY;TRACE</ConditionalDefines>
+    <OutputPath>..\Bin\Debug</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>.\Bin\Release</OutputPath>
+    <OutputPath>..\Bin\Release</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Target)' == 'Echoes.Full' ">
     <Mode>Echoes</Mode>
@@ -116,15 +118,64 @@
     <DefaultUses>Foundation;RemObjects.Elements.RTL;</DefaultUses>
     <DefineConstants>NEEDS_PORTING</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="#" />
-    <Reference Include="Elements">
+  <ItemGroup Condition=" '$(Target)' == 'Toffee.macOS' ">
+    <Reference Include="libElements">
       <Private>True</Private>
-      <HintPath>\Users\mh\Code\RTL2\Source\bin\Debug\NETStandard\Elements.dll</HintPath>
+      <HintPath>..\..\RTL2\Bin\Toffee\macOS\libElements.fx</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Target)' == 'Echoes.Full'">
+  <ItemGroup>
+    <Reference Include="#" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Echoes.Full' ">
     <Reference Include="System.Data" />
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Echoes.Core' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Echoes.Standard' ">
+    <Reference Include="Elements">
+      <Private>True</Private>
+      <HintPath>..\..\RTL2\Bin\Echoes\NETStandard2.0\Elements.dll</HintPath>
+    </Reference>
+    <Reference Include="Echoes">
+      <HintPath>..\..\RTL2\Bin\Echoes\NETStandard2.0\Echoes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Cooper' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Windows' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Linux' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Darwin.macOS' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Darwin.iOS' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Darwin.tvOS' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Darwin.watchOS' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Island.Android' ">
+    <Reference Include="Elements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Toffee.iOS' ">
+    <Reference Include="libElements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Toffee.tvOS' ">
+    <Reference Include="libElements" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Target)' == 'Toffee.watchOS' ">
+    <Reference Include="libElements" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets" />
   <Import Project="RemObjects.InternetPack.Shared.Base.projitems" Label="Shared" />

@@ -92,6 +92,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DnsResolveException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Connection\Connection.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Http\HttpCookies.pas" />
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Bindings\" />
